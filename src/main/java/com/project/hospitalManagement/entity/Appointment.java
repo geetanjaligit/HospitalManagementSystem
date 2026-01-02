@@ -10,31 +10,37 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
+@ToString
 public class Appointment {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable=false)
-    private LocalDateTime appointmenTime;
+    private LocalDateTime appointmentTime;
 
     @Column(length=500)
     private String reason;
 
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name="patient_id",nullable=false)
     private Patient patient; //owning side
 
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name="doctor_id",nullable=false)
     private Doctor doctor;
 }

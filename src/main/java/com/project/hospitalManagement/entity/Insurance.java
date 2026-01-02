@@ -1,6 +1,7 @@
 package com.project.hospitalManagement.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +23,7 @@ import jakarta.persistence.OneToOne;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Insurance {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)

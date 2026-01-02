@@ -2,16 +2,19 @@ package com.project.hospitalManagement.entity;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.project.hospitalManagement.entity.type.BloodGroupType;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -61,11 +64,11 @@ public class Patient {
     @Enumerated(EnumType.STRING)
     private BloodGroupType bloodGroup;
 
-    @OneToOne
+    @OneToOne(cascade={CascadeType.MERGE,CascadeType.PERSIST})
     @JoinColumn(name="patient_insurance_id" )//owning side
     private Insurance insurance;
 
-    @OneToMany(mappedBy="patient")
-    private List<Appointment> appointments; //non-owning
+    @OneToMany(mappedBy="patient",cascade={CascadeType.REMOVE},orphanRemoval=true,fetch = FetchType.EAGER)
+    private List<Appointment> appointments=new ArrayList<>(); //non-owning
 }
  

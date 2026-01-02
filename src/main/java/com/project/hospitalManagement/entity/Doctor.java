@@ -1,6 +1,7 @@
 package com.project.hospitalManagement.entity;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -40,7 +41,7 @@ public class Doctor {
     private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "doctor")
-    private List<Appointment> appointments;
+    private List<Appointment> appointments=new ArrayList<>();
 
     @ManyToMany(mappedBy = "doctors")
     private Set<Department> departments=new HashSet<>();
