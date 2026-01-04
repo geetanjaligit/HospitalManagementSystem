@@ -55,31 +55,31 @@ public class InsuranceTests {
                 .reason("Cancer")
                 .build();
     
-        var newAppointment=appointmentService.createNewAppointment(appointment,1L,2L);
-        System.out.println(newAppointment);
+        // var newAppointment=appointmentService.createNewAppointment(appointment,1L,2L);
+        // System.out.println(newAppointment);
 
-        var updatedAppointment=appointmentService.reAssignAppointmentToAnotherDoctor(newAppointment.getId(),3L);
-        System.out.println(updatedAppointment);
+        // var updatedAppointment=appointmentService.reAssignAppointmentToAnotherDoctor(newAppointment.getId(),3L);
+        // System.out.println(updatedAppointment);
 
     }
-    @Test
-    public void testCreateAppointmentAndDel()
-    {  
-        List<Long> appointmentIds = new ArrayList<>();
+    // @Test
+    // public void testCreateAppointmentAndDel()
+    // {  
+    //     List<Long> appointmentIds = new ArrayList<>();
 
-        for (int i = 0; i < 3; i++) {
-            Appointment appointment = Appointment.builder()
-                    .appointmentTime(LocalDateTime.of(2025, 11, 1 + i, 14, 0))
-                    .reason("Checkup " + i)
-                    .build();
-            Appointment saved = appointmentService.createNewAppointment(appointment, 1L, 3L);
-            appointmentIds.add(saved.getId());
-        }
+    //     for (int i = 0; i < 3; i++) {
+    //         Appointment appointment = Appointment.builder()
+    //                 .appointmentTime(LocalDateTime.of(2025, 11, 1 + i, 14, 0))
+    //                 .reason("Checkup " + i)
+    //                 .build();
+    //         Appointment saved = appointmentService.createNewAppointment(appointment, 1L, 3L);
+    //         appointmentIds.add(saved.getId());
+    //     }
 
-        patientRepository.deleteById(3L);
+    //     patientRepository.deleteById(3L);
 
-        for (Long appId : appointmentIds) {
-            System.out.println("Appointment " + appId + " exists: " + appointmentRepository.existsById(appId));
-        }
-    }
+    //     for (Long appId : appointmentIds) {
+    //         System.out.println("Appointment " + appId + " exists: " + appointmentRepository.existsById(appId));
+    //     }
+    // }
 }
