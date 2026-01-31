@@ -37,8 +37,9 @@ public class WebSecurityConfig {
                 .sessionManagement(sessionConfig->sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth->auth
                     .requestMatchers("/public/**","/auth/**").permitAll()
-                    .requestMatchers("/admin/**").hasRole("ADMIN")
-                    .requestMatchers("/doctors/**").hasAnyRole("ADMIN","DOCTOR")
+                    // .requestMatchers("/admin/**").hasRole("ADMIN")
+                    // .requestMatchers("/doctors/**").hasAnyRole("ADMIN","DOCTOR")
+                    .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
                 // .formLogin(Customizer.withDefaults());
