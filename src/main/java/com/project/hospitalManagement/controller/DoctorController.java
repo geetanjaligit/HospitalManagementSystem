@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.hospitalManagement.dto.AppointmentResponseDto;
 import com.project.hospitalManagement.service.AppointmentService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/doctors")
 @RequiredArgsConstructor
+@Tag(name="Doctor Controller",description="Doctor related APIs")
 public class DoctorController {
 
     private final AppointmentService appointmentService;

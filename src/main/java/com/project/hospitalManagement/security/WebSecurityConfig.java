@@ -3,32 +3,20 @@ package com.project.hospitalManagement.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Configuration
 @RequiredArgsConstructor
+@Slf4j
 public class WebSecurityConfig {
-
-    private final PasswordEncoder passwordEncoder;
     private final JwtAuthFilter jwtAuthFilter;
-    
-    /**
-     * Exposes AuthenticationManager as a bean so it can be injected into AuthService.
-     * Spring Security needs this bean to be explicitly exposed.
-     */
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration authConfig) throws Exception {
-        return authConfig.getAuthenticationManager();
-    }
+    private final OAuth2SuccessHandler oAuth2SuccessHandler;
     
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception{
@@ -36,12 +24,28 @@ public class WebSecurityConfig {
                 .csrf(csrfConfig->csrfConfig.disable())
                 .sessionManagement(sessionConfig->sessionConfig.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth->auth
-                    .requestMatchers("/public/**","/auth/**").permitAll()
+                    .requestMatchers(
+                            "/public/**",
+                            "/auth/**",
+
+                            "/swagger-ui/**",
+                            "/v3/api-docs/**",
+                            "/swagger-ui.html",
+
+                            "/api/v1/swagger-ui/**",
+                            "/api/v1/v3/api-docs/**"
+                    ).permitAll()
                     // .requestMatchers("/admin/**").hasRole("ADMIN")
                     // .requestMatchers("/doctors/**").hasAnyRole("ADMIN","DOCTOR")
                     .anyRequest().authenticated()
                 )
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .oauth2Login(oAuth2->oAuth2.failureHandler(
+                    (request,response,exception)->{
+                        log.error("OAuth2 login failed:{}",exception.getMessage());
+                    })
+                    .successHandler(oAuth2SuccessHandler)
+                );
                 // .formLogin(Customizer.withDefaults());
         return httpSecurity.build();
     }

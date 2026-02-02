@@ -16,11 +16,13 @@ import com.project.hospitalManagement.dto.DoctorResponseDto;
 import com.project.hospitalManagement.dto.PatientResponseDto;
 import com.project.hospitalManagement.service.PatientService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/admin")
 @RequiredArgsConstructor
+@Tag(name="Admin Controller",description="Admin related APIs")
 public class AdminController {
 
     private final PatientService patientService;

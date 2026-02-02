@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @Repository
 public interface PatientRepository extends JpaRepository<Patient,Long> {
     Patient findByName(String name);
-    List<Patient> findByBirthDate(LocalDate birthDate,String email);
+    List<Patient> findByBirthDateAndEmail(LocalDate birthDate,String email);
     List<Patient> findByBirthDateBetween(LocalDate startDate,LocalDate endDate);
     List<Patient> findByNameContainingOrderByIdDesc(String query);
 

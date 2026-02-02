@@ -14,11 +14,13 @@ import com.project.hospitalManagement.dto.PatientResponseDto;
 import com.project.hospitalManagement.service.AppointmentService;
 import com.project.hospitalManagement.service.PatientService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController//combination of @Controller and @ResponseBody
 @RequestMapping("/patients")
 @RequiredArgsConstructor
+@Tag(name="Patient Controller",description="Patient related APIs")
 public class PatientController {
 
     private final PatientService patientService;

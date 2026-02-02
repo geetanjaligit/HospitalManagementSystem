@@ -12,11 +12,13 @@ import com.project.hospitalManagement.dto.SignupRequestDto;
 import com.project.hospitalManagement.dto.SignupResponseDto;
 import com.project.hospitalManagement.security.AuthService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
+@Tag(name="Auth Controller",description="Auth related APIs")
 public class AuthController {
     private final AuthService authService;
 
@@ -27,7 +29,7 @@ public class AuthController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<SignupResponseDto> signup(@RequestBody SignupRequestDto signupRequestDto)
+    public ResponseEntity<SignupResponseDto> signup(@RequestBody LoginRequestDto signupRequestDto)
     {
         return ResponseEntity.ok(authService.signup(signupRequestDto));
     }
